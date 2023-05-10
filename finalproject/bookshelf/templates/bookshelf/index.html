@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %} BookShelf Home
+        {% endblock %}
+    </title>
+</head>
+<body>
+
+{% block bodyPag %}
+<header>
+    {% if request.user.is_authenticated %}
+    <div id="nome">Bem vindo, {{ request.user.username }}!</div>
+    {% else %}
+    <div id="no_name">Bem vindo!</div>
+    {% endif %}
+</header>
+{% endblock %}
+<nav>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'bookshelf:logoutview' %}"> Log out </a>
+    <hr>
+    {% else %}
+    <br>
+    <a href="{% url 'bookshelf:loginview' %}">Log in </a>
+    <hr>
+    <a href="{% url 'bookshelf:registautilizador' %}">Register </a>
+    <hr>
+    {% endif %}
+    <a href="{% url 'bookshelf:index' %}">Home Page </a>
+    <hr>
+</nav>
+</body>
+</html>

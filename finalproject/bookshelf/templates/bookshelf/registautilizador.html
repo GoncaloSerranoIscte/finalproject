@@ -1,0 +1,24 @@
+{% extends "bookshelf/index.html" %}
+{% block title %}Register
+{% endblock %}
+
+{% block bodyPag %}
+<header>
+    <div>Register User</div>
+</header>
+<form action="{% url 'bookshelf:registautilizador'%}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    Nome:<br><input id="name" name="name" type="text"><br>
+    E-mail: <br><input autocomplete="off" id="email" name="email" type="email"><br>
+    Password:<br><input id="password" name="password" type="password"><br>
+    <label for="role">Choose a Role:</label>
+
+    <select name="role" id="role">
+        <option value="Publisher">Publisher</option>
+        <option value="User">User</option>
+    </select>
+    <input style="margin-top: 10px;" type="submit" value="Register">
+</form>
+
+
+{% endblock %}

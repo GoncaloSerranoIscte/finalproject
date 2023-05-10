@@ -1,0 +1,16 @@
+{% extends "bookshelf/index.html" %}
+{% block title %}Login
+{% endblock %}
+
+{% block bodyPag %}
+<header>
+    <div>Log in</div>
+</header>
+    <form action="{% url 'bookshelf:loginview'%}" method="post" enctype="multipart/form-data">
+    {% load static %}
+    {% csrf_token %}
+        Nome:<br><input type="text" id= "name" name="name"><br>
+        Password:<br><input type="password" id= "password" name="password"><br>
+        <input type="submit" value="Log in" >
+   </form>
+{% endblock %}
