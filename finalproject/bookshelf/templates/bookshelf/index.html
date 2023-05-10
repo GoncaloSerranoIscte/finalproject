@@ -11,25 +11,51 @@
 
 {% block bodyPag %}
 <header>
+    {% load static %}
     {% if request.user.is_authenticated %}
     <div id="nome">Bem vindo, {{ request.user.username }}!</div>
+    {% if request.user.reader.image == "" %}
+    <img id="user-Pfoto" src="{% static request.user.publisher.image %}"
+         alt="Imagem não encontrada" class="rounded-image-mini" title="Foto de Perfil"></div>
+    {% endif %}
+    {% if request.user.publisher.image == "" %}
+    <img id="user-Rfoto" src="{% static request.user.reader.image %}"
+         alt="Imagem não encontrada" class="rounded-image-mini" title="Foto de Perfil"></div>
+    {% endif %}
     {% else %}
     <div id="no_name">Bem vindo!</div>
     {% endif %}
 </header>
+
 {% endblock %}
 <nav>
     {% if request.user.is_authenticated %}
+    {% if request.user.reader.image == "" %}
+    {% if url != "adicionarlivro" %}
+    <a href="{% url 'bookshelf:adicionarlivro' %}"> Add Book </a>
+    <hr>
+    {% endif %}
+    {% endif %}
+    {% if request.user.publisher.image == "" and url != "verlivros" %}
+    <a href="{% url 'bookshelf:verlivros' %}"> Ver Livros </a>
+    <hr>
+    {% endif %}
     <a href="{% url 'bookshelf:logoutview' %}"> Log out </a>
     <hr>
     {% else %}
     <br>
+    {% if url != "loginview" %}
     <a href="{% url 'bookshelf:loginview' %}">Log in </a>
     <hr>
+    {% endif %}
+    {% if url != "registautilizador" %}
     <a href="{% url 'bookshelf:registautilizador' %}">Register </a>
     <hr>
     {% endif %}
+    {% endif %}
+    {% if url != "index" %}
     <a href="{% url 'bookshelf:index' %}">Home Page </a>
+    {% endif %}
     <hr>
 </nav>
 </body>

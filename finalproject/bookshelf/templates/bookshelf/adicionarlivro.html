@@ -1,0 +1,22 @@
+{% extends "bookshelf/index.html" %}
+{% block title %}Add Book
+{% endblock %}
+
+{% block bodyPag %}
+<header>
+    <div>Add Book</div>
+</header>
+<form action="{% url 'bookshelf:adicionarlivro'%}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    Name:<br><input id="name" name="name" type="text"><br>
+    Authors: <br><input id="authors" name="authors" type="text"><br>
+    Description:<br><input id="description" name="description" type="text"><br>
+    Book Cover:<br><input type="file" name="myfile"><br>
+    <label for="pud_data">Release Date:</label>
+    <input type="datetime-local" id="pud_data" name="pud_data" >
+
+    <input style="margin-top: 10px;" type="submit" value="Register">
+</form>
+
+
+{% endblock %}

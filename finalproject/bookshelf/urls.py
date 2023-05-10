@@ -12,4 +12,8 @@ urlpatterns = [
     path("registautilizador", views.registautilizador, name='registautilizador'),
 
     path("logoutview", views.logoutview, name='logoutview'),
+
+    path("adicionarlivro", views.adicionarlivro, name='adicionarlivro'),
+
+    path("verlivros", views.verlivros, name='verlivros'),
 ]

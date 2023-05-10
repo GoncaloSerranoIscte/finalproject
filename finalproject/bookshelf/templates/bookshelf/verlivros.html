@@ -1,0 +1,27 @@
+{% extends "bookshelf/index.html" %}
+{% block title %}Ver Livros
+{% endblock %}
+
+{% block bodyPag %}
+{% if livros %}
+{% load static %}
+<ul id="lista-livros">
+    {% for book in livros %}
+    <li>
+        <br>Book: {{ book.name }}
+        <br>Description: {{ book.description }}
+        <br>Author: {{ book.autor }}
+        <br>Release Date: {{ book.pub_data.day }}/{{ book.pub_data.month }}/{{ book.pub_data.year }}
+        <br>Publisher: {{ book.publisher.user.username }}
+        <br><img id="book-cover" src="{% static book.image %}"
+             alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover"></div>
+        <br><br><br>
+
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Bookshelf empty.</p>
+{% endif %}
+
+{% endblock %}
