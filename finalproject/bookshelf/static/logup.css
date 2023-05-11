@@ -101,7 +101,7 @@ input[ type="submit"]:hover{
 	color: #ffffff;
 }
 
-input[name="Login"] {
+input[name="Log in"] {
 	height: 40px;
 	justify-content: center;
 	display: block;
@@ -117,27 +117,6 @@ input[name="Login"] {
 	cursor: pointer;
 }
 
-
-button{
-	width: 50%;
-	height: 40px;
-	margin: 10px auto;
-	justify-content: center;
-	display: block;
-	color: #fff;
-	background: #865642;
-	font-size: 1em;
-	font-weight: bold;
-	margin-top: 20px;
-	outline: none;
-	border: none;
-	border-radius: 5px;
-	transition: .2s ease-in;
-	cursor: pointer;
-}
-button:hover{
-	background: #a66d53;
-}
 .login{
 	height: 460px;
 	background: #ffffff;
