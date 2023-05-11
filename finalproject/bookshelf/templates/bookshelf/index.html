@@ -2,18 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'index.css'%}">
+     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
     <title>
         {% block title %} BookShelf Home
         {% endblock %}
     </title>
 </head>
 <body>
+{% block nav %}
+    <button id="openButton">Menu.</button>
 
+
+     {% if request.user.is_authenticated %}
+    <div class="popup" id="popup">
+    <div class="vertical-navbar">
+      <span class="close-button" id="closeButton">&times;</span>
+    {% if request.user.reader.image == "" %}
+    {% if url != "adicionarlivro" %}
+    <a href="{% url 'bookshelf:adicionarlivro' %}"> Add Book </a>
+    <hr>
+    {% endif %}
+    {% endif %}
+    {% if request.user.publisher.image == "" and url != "verlivros" %}
+    <a href="{% url 'bookshelf:verlivros' %}"> Ver Livros </a>
+    <hr>
+    {% endif %}
+    <a href="{% url 'bookshelf:logoutview' %}"> Log out </a>
+    <hr>
+            </div>
+  </div>
+    {% else %}
+    <br>
+    {% if url != "loginview" %}
+    <a href="{% url 'bookshelf:loginview' %}" id="login">Login<br>Register</a>
+    <hr>
+    {% endif %}
+
+    {% endif %}
+    {% if url != "index" %}
+    <a href="{% url 'bookshelf:index' %}">Home Page </a>
+    {% endif %}
+    <hr>
+
+
+  <script>
+    // Abrir janela popup ao clicar no botão
+    document.getElementById("openButton").addEventListener("click", function() {
+      document.getElementById("popup").style.display = "flex";
+    });
+
+    // Fechar janela popup ao clicar no botão "X"
+    document.getElementById("closeButton").addEventListener("click", function() {
+      document.getElementById("popup").style.display = "none";
+    });
+  </script>
+{% endblock %}
 {% block bodyPag %}
 <header>
     {% load static %}
     {% if request.user.is_authenticated %}
-    <div id="nome">Bem vindo, {{ request.user.username }}!</div>
+    <div id="nome" style="color:white; font-size:10px">Bem vindo, {{ request.user.username }}!</div>
     {% if request.user.reader.image == "" %}
     <img id="user-Pfoto" src="{% static request.user.publisher.image %}"
          alt="Imagem não encontrada" class="rounded-image-mini" title="Foto de Perfil"></div>
@@ -23,12 +73,12 @@
          alt="Imagem não encontrada" class="rounded-image-mini" title="Foto de Perfil"></div>
     {% endif %}
     {% else %}
-    <div id="no_name">Bem vindo!</div>
+    <div id="no_name" style="color:white; font-size:15px; padding-left: 10px;">Bem vindo!</div>
     {% endif %}
 </header>
 
 {% endblock %}
-{% block nav %}
+<!--
 <nav>
     {% if request.user.is_authenticated %}
     {% if request.user.reader.image == "" %}
@@ -55,7 +105,17 @@
     <a href="{% url 'bookshelf:index' %}">Home Page </a>
     {% endif %}
     <hr>
-</nav>
+</nav>-->
+
+{% block content %}
+    <div class="searchBar">
+  <h1>Bookshelf.</h1>
+<br>
+  <form method="GET" action="{% url 'bookshelf:index' %}">
+    <input type="text" name="q" placeholder="Search...">
+    <button type="submit">Search</button>
+  </form>
+        </div>
 {% endblock %}
 </body>
 </html>

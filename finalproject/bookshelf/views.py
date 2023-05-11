@@ -1,6 +1,5 @@
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
-
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -13,6 +12,17 @@ from django.template.loader import render_to_string
 
 def index(request):
     url = "index"
+    from django.db.models import Q
+
+    def index(request):
+        url = "index"
+        query = request.GET.get('q')
+
+        if query:
+            books = Book.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
+            context = {'url': url, 'books': books}
+            return render(request, 'bookshelf/search.html', context)
+
     context = {'url': url}
     return render(request, 'bookshelf/index.html', context)
 
