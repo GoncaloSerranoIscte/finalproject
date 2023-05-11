@@ -9,8 +9,6 @@ urlpatterns = [
 
     path("loginview", views.loginview, name='loginview'),
 
-    path("registautilizador", views.registautilizador, name='registautilizador'),
-
     path("logoutview", views.logoutview, name='logoutview'),
 
     path("adicionarlivro", views.adicionarlivro, name='adicionarlivro'),
@@ -21,5 +19,10 @@ urlpatterns = [
 
     path("<int:book_id>/adicionarlista", views.adicionarlista, name='adicionarlista'),
 
+    path("verlivrosReaded", views.verlivrosReaded, name='verlivrosReaded'),
+
+    path("verlivrosToRead", views.verlivrosToRead, name='verlivrosToRead'),
+
+    path("verlivrosReading", views.verlivrosReading, name='verlivrosReading'),
 
 ]
