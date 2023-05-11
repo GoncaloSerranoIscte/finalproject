@@ -1,8 +1,9 @@
 {% extends "bookshelf/index.html" %}
 {% block title %}Login
 {% endblock %}
-
-{% block bodyPag %}
+{% block nav %}
+{% endblock %}
+{% block content %}
 <header>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'logup.css'%}">
@@ -45,6 +46,4 @@
         </form>
     </div>
 </div>
-{% endblock %}
-{% block nav %}
 {% endblock %}
