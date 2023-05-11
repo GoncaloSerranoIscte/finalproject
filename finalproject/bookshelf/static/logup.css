@@ -23,7 +23,7 @@ body{
 
 .SelectRole {
   width: 50%; /* Definir a largura da coluna direita */
-  /* Resto das propriedades CSS específicas para a classe .SelectRole... */
+  font-size: 10px;
 }
 
 #chk{
