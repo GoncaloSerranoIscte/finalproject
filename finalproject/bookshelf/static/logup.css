@@ -6,14 +6,14 @@ body{
 	align-items: center;
 	min-height: 100vh;
 	font-family: 'Jost', sans-serif;
-	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+	background-image: url("background.jpg");
 }
 .main{
 	width: 600px;
-	height: 500px;
-	background: red;
+	height: 550px;
+	background: #865642;
 	overflow: hidden;
-	background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
+	backgroundz: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
 	border-radius: 10px;
 	box-shadow: 5px 20px 50px #000;
 }
@@ -23,6 +23,8 @@ body{
 .signup{
 	float:left;
 	width:300px;
+	color: white;
+	text-align: center;
 
 }
 
@@ -31,10 +33,13 @@ body{
   justify-content: space-between; /* Alinhar os elementos nas extremidades */
 }
 
+
 .SelectRole{
 	float:right;
 	width:300px;
-	font-size: 10px;
+	color: white;
+	text-align: center;
+	align-content: center;
 }
 label{
 	color: #fff;
@@ -49,7 +54,7 @@ label{
 input{
 	width: 60%;
 	height: 20px;
-	background: #e0dede;
+	background: #ffffff;
 	justify-content: center;
 	display: flex;
 	margin: 20px auto;
@@ -65,8 +70,8 @@ input{
 	margin: 10px auto;
 	justify-content: center;
 	display: block;
-	color: #fff;
-	background: #573b8a;
+	color: #865642;
+	background: #ffffff;
 	font-size: 15px;
 	font-weight: bold;
 	margin-top: 20px;
@@ -75,6 +80,44 @@ input{
 	border-radius: 5px;
 }
 
+input[name="Register"] {
+	height: 40px;
+	justify-content: center;
+	display: block;
+	color: #865642;
+	background: #ffffff;
+	font-size: 1em;
+	font-weight: bold;
+	margin-top: 20px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}
+
+input[ type="submit"]:hover{
+	background: #a2694d;
+	color: #ffffff;
+}
+
+input[name="Login"] {
+	height: 40px;
+	justify-content: center;
+	display: block;
+	color: #ffffff;
+	background: #865642;
+	font-size: 1em;
+	font-weight: bold;
+	margin-top: 20px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}
+
+
 button{
 	width: 50%;
 	height: 40px;
@@ -82,7 +125,7 @@ button{
 	justify-content: center;
 	display: block;
 	color: #fff;
-	background: #573b8a;
+	background: #865642;
 	font-size: 1em;
 	font-weight: bold;
 	margin-top: 20px;
@@ -93,17 +136,17 @@ button{
 	cursor: pointer;
 }
 button:hover{
-	background: #6d44b8;
+	background: #a66d53;
 }
 .login{
 	height: 460px;
-	background: #eee;
+	background: #ffffff;
 	border-radius: 60% / 10%;
-	transform: translateY(-180px);
+	transform: translateY(-150px);
 	transition: .8s ease-in-out;
 }
 .login label{
-	color: #573b8a;
+	color: #865642;
 	transform: scale(.6);
 }
 
