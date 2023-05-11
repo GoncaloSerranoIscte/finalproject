@@ -1,0 +1,46 @@
+{% extends "bookshelf/index.html" %}
+
+{% block title %}Ver {{ book.name }}{% endblock %}
+
+{% block bodyPag %}
+
+{% load static %}
+<header>{{ book.name }}</header>
+<br>Book: {{ book.name }}
+<br>Description: {{ book.description }}
+<br>Author: {{ book.autor }}
+<br>Release Date: {{ book.pub_data.day }}/{{ book.pub_data.month }}/{{ book.pub_data.year }}
+<br>Publisher: {{ book.publisher.user.username }}
+<br>Rating: {{ book.rating }}
+<br><img id="book-cover" src="{% static book.image %}"
+         alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover"></div>
+<br><br><br>
+
+<form action="{% url 'bookshelf:adicionarlista' book.id %}"
+      method="post">
+    {% csrf_token %}
+    <input type="radio" name="opcao"
+           id="opcao1"
+           value="1"/>
+    <label for="opcao1">
+            to read
+    </label><input type="radio" name="opcao"
+                   id="opcao2"
+                   value="2"/>
+    <label for="opcao2">
+            reading
+    </label><input type="radio" name="opcao"
+                   id="opcao3"
+                   value="3"/>
+    <label for="opcao3">
+            readed
+    </label>
+    <br/>
+    <input type="submit" value="lista"/>
+
+    <br>
+</form>
+
+{% endblock %}
+
+

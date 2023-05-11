@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 
 from .models import *
@@ -6,8 +7,8 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from django.core.files.storage import FileSystemStorage
-
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 def index(request):
     url = "index"
@@ -109,6 +110,40 @@ def adicionarlivro(request):
 
 def verlivros(request):
     url = "verlivros"
-    livros = Book.objects.order_by('-pub_data')
-    context = {'url': url , 'livros' : livros}
+    livros = Book.objects.all()
+    order_by = request.GET.get('order_by', '-pub_data')
+    for l in livros:
+        l.updateRating()
+
+    if order_by == 'name':
+        livros = livros.order_by('name')
+    elif order_by == '-name':
+        livros = livros.order_by('-name')
+    elif order_by == 'autor':
+        livros = livros.order_by('autor')
+    elif order_by == '-autor':
+        livros = livros.order_by('-autor')
+    elif order_by == 'pub_data':
+        livros = livros.order_by('pub_data')
+    elif order_by == '-pub_data':
+        livros = livros.order_by('-pub_data')
+    elif order_by == 'rating':
+        livros = livros.order_by('rating')
+    elif order_by == '-rating':
+        livros = livros.order_by('-rating')
+
+    context = {'url': url , 'livros' : livros, 'order_by': order_by}
     return render(request, 'bookshelf/verlivros.html', context)
+
+
+def detalhe(request, book_id):
+    try:
+        book = Book.objects.get(pk=book_id)
+    except Book.DoesNotExist:
+        raise Http404("The Book doesnt exist")
+    return render(request, 'bookshelf/detalhe.html', {'book': book})
+
+
+def adicionarlista(request, book_id):
+    book = Book.objects.get(pk=book_id)
+    return HttpResponseRedirect(reverse('bookshelf:index'))
