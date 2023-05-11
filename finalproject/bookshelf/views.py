@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.db.models import Q
 
 
 def index(request):
@@ -141,12 +142,24 @@ def detalhe(request, book_id):
         if c.book.id == book_id and c.reader.user.username == request.user.username:
             a = c
             exists = 1
-    return render(request, 'bookshelf/detalhe.html', {'book': book, 'connect': a})
+    connections = Connect.objects.filter(
+       book=book
+    )
+    return render(request, 'bookshelf/detalhe.html', {'book': book, 'connect': a, 'connections': connections})
 
 
 def adicionarlista(request, book_id):
     c1 = None
     book = Book.objects.get(pk=book_id)
+    if 'comentar' in request.POST:
+        print("changing comment")
+        book = Book.objects.get(pk=book_id)
+        for c in Connect.objects.all():
+            if c.book.id == book_id and c.reader.user.username == request.user.username:
+                c.comment = request.POST['comentar']
+                c.save()
+                c1 = c
+                exists = 1
     if 'lista' in request.POST:
         print("changing list")
         opc = request.POST['opcao']
@@ -197,19 +210,21 @@ def adicionarlista(request, book_id):
                 c.save()
                 c1 = c
                 book.updateRating()
-
-    return render(request, 'bookshelf/detalhe.html', {'book': book, 'connect': c1})
+    connections = Connect.objects.filter(
+        book=book
+    )
+    return render(request, 'bookshelf/detalhe.html', {'book': book, 'connect': c1, 'connections':connections})
 
 
 def verlivrosToRead(request):
-    livros = Book.objects.all()
-    for c in Connect.objects.all():
-        if c.shelf != "to read" or c.reader.user.username != request.user.username:
-            livros.exclude(id=c.book.id)
+    livros = Book.objects.filter(
+        connect__reader=request.user.reader,
+        connect__shelf='to read'
+    ).distinct()
     url = "verlivrosToRead"
 
     order_by = request.GET.get('order_by', '-pub_data')
-    if len(livros) != 0:
+    if livros.exists():
         for l in livros:
             l.updateRating()
 
@@ -234,17 +249,15 @@ def verlivrosToRead(request):
     return render(request, 'bookshelf/verlivrosToRead.html', context)
 
 def verlivrosReading(request):
-    print("oioiioahahahaha")
-    livros = []
-    for c in Connect.objects.all():
-        if c.shelf == "reading" or c.reader.user.username == request.user.username:
-            livros.append(c.book)
+    livros = Book.objects.filter(
+        connect__reader=request.user.reader,
+        connect__shelf='reading'
+    ).distinct()
     url = "verlivrosReading"
 
     order_by = request.GET.get('order_by', '-pub_data')
-    if len(livros) != 0:
+    if livros.exists():
         for l in livros:
-            print("oioi")
             l.updateRating()
 
     if order_by == 'name':
@@ -268,14 +281,14 @@ def verlivrosReading(request):
     return render(request, 'bookshelf/verlivrosReading.html', context)
 
 def verlivrosReaded(request):
-    livros = Book.objects.all()
-    for c in Connect.objects.all():
-        if c.shelf != "readed" or c.reader.user.username != request.user.username:
-            livros.exclude(id=c.book.id)
+    livros = Book.objects.filter(
+        connect__reader=request.user.reader,
+        connect__shelf='readed'
+    ).distinct()
     url = "verlivrosReaded"
 
     order_by = request.GET.get('order_by', '-pub_data')
-    if len(livros) != 0:
+    if livros.exists():
         for l in livros:
             l.updateRating()
 

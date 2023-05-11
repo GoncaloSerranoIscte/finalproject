@@ -6,6 +6,8 @@
 
 {% load static %}
 {% csrf_token %}
+
+
 <header>{{ book.name }}</header>
 <br>Book: {{ book.name }}
 <br>Description: {{ book.description }}
@@ -13,6 +15,11 @@
 <br>Release Date: {{ book.pub_data.day }}/{{ book.pub_data.month }}/{{ book.pub_data.year }}
 <br>Publisher: {{ book.publisher.user.username }}
 <br>Rating: {{ book.rating }}
+
+<br><img id="book-cover" src="{% static book.image %}"
+         alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover"></div>
+<br><br><br>
+
 {% if connect == None %}
 <br>No Current Shelf
 {% else %}
@@ -35,11 +42,15 @@
     </div>
     <input type="submit" name="submit" value="rate"/>
 </form>
+<form action="{% url 'bookshelf:adicionarlista' book.id %}"
+      method="post">
+    {% csrf_token %}
+    Add Comment:<br><input id="comentar" name="comentar" type="text"><br>
+    <input style="margin-top: 10px;" type="submit" value="comentar">
+</form>
 {% endif %}
 {% endif %}
-<br><img id="book-cover" src="{% static book.image %}"
-         alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover"></div>
-<br><br><br>
+
 
 <form action="{% url 'bookshelf:adicionarlista' book.id %}"
       method="post">
@@ -66,6 +77,27 @@
 
     <br>
 </form>
+
+{% if connections %}
+{% load static %}
+<ul id="lista-comentario">
+    {% for conn in connections %}
+    <ul>
+        {% if conn.comment != "None" %}
+        <br> //////////////////////////////////////
+        <br>User: {{ conn.reader.user.username }}</a>
+        {% if conn.rating != -1 %}
+        <br>Rating: {{ conn.rating }}
+        {% endif %}
+        <br>Comment: {{ conn.comment }}
+        <br><br><br>
+        {% endif %}
+    </ul>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No Comments yet.</p>
+{% endif %}
 
 {% endblock %}
 

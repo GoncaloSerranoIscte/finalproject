@@ -22,7 +22,7 @@ class Book(models.Model):
     autor = models.CharField(max_length=500)
     image = models.CharField(max_length=500, default="")
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0)
+    rating = models.IntegerField(default=-1)
 
 
 
@@ -50,4 +50,5 @@ class Connect(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     rating = models.IntegerField(default=-1)
     shelf = models.CharField(max_length=50)
+    comment = models.CharField(max_length=500, default="None")
 
