@@ -9,9 +9,7 @@ body{
 	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 }
 .main{
-	display: flex; /* Ativar o flexbox para criar um layout flexível */
-  justify-content: space-between;
-	width: 700px;
+	width: 600px;
 	height: 500px;
 	background: red;
 	overflow: hidden;
@@ -19,20 +17,24 @@ body{
 	border-radius: 10px;
 	box-shadow: 5px 20px 50px #000;
 }
-
-
-.SelectRole {
-  width: 50%; /* Definir a largura da coluna direita */
-  font-size: 10px;
-}
-
 #chk{
 	display: none;
 }
 .signup{
-	width: 50%;
-	position: relative;
-	height: 100%;
+	float:left;
+	width:300px;
+
+}
+
+.signwrapped{
+	height:400px;
+  justify-content: space-between; /* Alinhar os elementos nas extremidades */
+}
+
+.SelectRole{
+	float:right;
+	width:300px;
+	font-size: 10px;
 }
 label{
 	color: #fff;
@@ -56,8 +58,25 @@ input{
 	outline: none;
 	border-radius: 5px;
 }
+
+.role{
+	width: 150px;
+	height: 30px;
+	margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	background: #573b8a;
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 20px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+}
+
 button{
-	width: 60%;
+	width: 50%;
 	height: 40px;
 	margin: 10px auto;
 	justify-content: center;
