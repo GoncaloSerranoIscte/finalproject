@@ -5,6 +5,7 @@
 {% block bodyPag %}
 
 {% load static %}
+{% csrf_token %}
 <header>{{ book.name }}</header>
 <br>Book: {{ book.name }}
 <br>Description: {{ book.description }}
@@ -12,31 +13,56 @@
 <br>Release Date: {{ book.pub_data.day }}/{{ book.pub_data.month }}/{{ book.pub_data.year }}
 <br>Publisher: {{ book.publisher.user.username }}
 <br>Rating: {{ book.rating }}
+{% if connect == None %}
+<br>No Current Shelf
+{% else %}
+<br>Currently in shelf: {{ connect.shelf }}
+{% if connect.shelf == "readed" %}
+<form action="{% url 'bookshelf:adicionarlista' book.id %}"
+      method="post">
+    {% csrf_token %}
+    <div class="rate">
+        <input type="radio" id="8" name="rate" value="8"/>
+        <label for="8" title="text">5 stars</label>
+        <input type="radio" id="7" name="rate" value="7"/>
+        <label for="7" title="text">4 stars</label>
+        <input type="radio" id="6" name="rate" value="6"/>
+        <label for="6" title="text">3 stars</label>
+        <input type="radio" id="5" name="rate" value="5"/>
+        <label for="5" title="text">2 stars</label>
+        <input type="radio" id="4" name="rate" value="4"/>
+        <label for="4" title="text">1 star</label>
+    </div>
+    <input type="submit" name="submit" value="rate"/>
+</form>
+{% endif %}
+{% endif %}
 <br><img id="book-cover" src="{% static book.image %}"
          alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover"></div>
 <br><br><br>
 
 <form action="{% url 'bookshelf:adicionarlista' book.id %}"
       method="post">
+    Add to shelf:
     {% csrf_token %}
     <input type="radio" name="opcao"
-           id="opcao1"
+           id="1"
            value="1"/>
-    <label for="opcao1">
-            to read
+    <label for="1">
+        to read
     </label><input type="radio" name="opcao"
-                   id="opcao2"
+                   id="2"
                    value="2"/>
-    <label for="opcao2">
-            reading
+    <label for="2">
+        reading
     </label><input type="radio" name="opcao"
-                   id="opcao3"
+                   id="3"
                    value="3"/>
-    <label for="opcao3">
-            readed
+    <label for="3">
+        readed
     </label>
     <br/>
-    <input type="submit" value="lista"/>
+    <input type="submit" name="lista" value="lista"/>
 
     <br>
 </form>

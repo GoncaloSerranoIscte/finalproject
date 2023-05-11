@@ -24,14 +24,14 @@ class Book(models.Model):
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
 
+
+
     def updateRating(self):
         print("updateRating called for", self.name)
         ratingAux = 0
         num = 0
         for c in Connect.objects.all():
-            print("updateRating called for", self.name)
             if c.book == self:
-                print("updateRating called for", self.name)
                 if c.rating != -1:
                     print(c.rating)
                     ratingAux = ratingAux + c.rating
@@ -50,3 +50,4 @@ class Connect(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     rating = models.IntegerField(default=-1)
     shelf = models.CharField(max_length=50)
+

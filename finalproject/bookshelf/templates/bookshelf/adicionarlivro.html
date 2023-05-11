@@ -1,85 +1,22 @@
 {% extends "bookshelf/index.html" %}
-
-{% block title %}Ver Livros{% endblock %}
-
-{% block bodyPag %}
-    <header>
-        order by: <a id="rate" onclick="sortBooksByRating()" href="#">Rating</a>   <a id="asc" onclick="sortBooksByAscendingDate()" href="#">Date Ascending</a>   <a id="dec" onclick="sortBooksByDecreasingDate()" href="#">Date Decreasing</a>
-    </header>
-    {% if livros %}
-    {% load static %}
-    <ul id="lista-livros">
-        {% for book in livros %}
-        <li class="book">
-            <br>Book: {{ book.name }}
-            <br>Description: {{ book.description }}
-            <br>Author: {{ book.autor }}
-            <br>Release Date: {{ book.pub_data.day }}/{{ book.pub_data.month }}/{{ book.pub_data.year }}
-            <br>Publisher: {{ book.publisher.user.username }}
-            <br>Rating: <span class="rating">{{ book.rating }}</span>
-            <br><img id="book-cover" src="{% static book.image %}" alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover">
-            <br><br><br>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>Bookshelf empty.</p>
-    {% endif %}
+{% block title %}Add Book
 {% endblock %}
 
-{% block scripts %}
-<script>
-$(document).ready(function() {
-    // Function to sort the books by rating
-    function sortBooksByRating() {
-        var books = $(".book");
-        books.sort(function(a, b) {
-            var ratingA = $(a).find(".rating").text();
-            var ratingB = $(b).find(".rating").text();
-            return ratingB - ratingA;
-        });
-        $("#lista-livros").html(books);
-    }
+{% block bodyPag %}
+<header>
+    <div>Add Book</div>
+</header>
+<form action="{% url 'bookshelf:adicionarlivro'%}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    Name:<br><input id="name" name="name" type="text"><br>
+    Authors: <br><input id="authors" name="authors" type="text"><br>
+    Description:<br><input id="description" name="description" type="text"><br>
+    Book Cover:<br><input type="file" name="myfile"><br>
+    <label for="pud_data">Release Date:</label>
+    <input type="datetime-local" id="pud_data" name="pud_data" >
 
-    // Function to sort the books by ascending date
-    function sortBooksByAscendingDate() {
-        var books = $(".book");
-        books.sort(function(a, b) {
-            var dateA = new Date($(a).find(".pub-date").text());
-            var dateB = new Date($(b).find(".pub-date").text());
-            return dateA - dateB;
-        });
-        $("#lista-livros").html(books);
-    }
+    <input style="margin-top: 10px;" type="submit" value="Register">
+</form>
 
-    // Function to sort the books by decreasing date
-    function sortBooksByDecreasingDate() {
-        var books = $(".book");
-        books.sort(function(a, b) {
-            var dateA = new Date($(a).find(".pub-date").text());
-            var dateB = new Date($(b).find(".pub-date").text());
-            return dateB - dateA;
-        });
-        $("#lista-livros").html(books);
-    }
 
-    // Sort books by rating when "Rating" is clicked
-    $("#rate").click(function(e) {
-        e.preventDefault();
-        sortBooksByRating();
-    });
-
-    // Sort books by ascending date when "Date Ascending" is clicked
-    $("#asc").click(function(e) {
-        e.preventDefault();
-        sortBooksByAscendingDate();
-    });
-
-    // Sort books by decreasing date when "Date Decreasing" is clicked
-    $("#dec").click(function(e) {
-        e.preventDefault();
-        sortBooksByDecreasingDate();
-    });
-});
-</script>
 {% endblock %}
