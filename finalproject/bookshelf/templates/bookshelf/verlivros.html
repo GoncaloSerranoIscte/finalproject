@@ -7,6 +7,8 @@
     <a href="{% url 'bookshelf:verlivrosToRead' %}">To Read</a><br>
     <a href="{% url 'bookshelf:verlivrosReading'  %}">Reading</a><br>
     <a href="{% url 'bookshelf:verlivrosReaded'  %}">Readed</a><br>
+    <a href="{% url 'bookshelf:verlivros'  %}">All</a><br>
+    {% if url != "verlivrospesquisa" %}
     <form method="get" id="book-form">
         <label for="order_by">Sort By:</label>
         <select name="order_by" id="order_by">
@@ -16,6 +18,13 @@
             <option value="rating"{% if order_by == 'rating' %} selected{% endif %}>Rating (Lowest First)</option>
         </select>
         <button type="submit">Sort</button>
+    </form>
+    {% endif %}
+    <form action="{% url 'bookshelf:verlivrospesquisa' %}"
+          method="post">
+        {% csrf_token %}
+        Pesquisar:<br><input id="pesquisa" name="pesquisa" type="text"><br>
+        <input style="margin-top: 10px;" type="submit" value="pesquisa">
     </form>
 </header>
 {% if livros %}

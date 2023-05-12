@@ -25,6 +25,17 @@
     {% else %}
     <div id="no_name">Bem vindo!</div>
     {% endif %}
+
+    {% if request.user.is_authenticated and request.user.reader.image == "" %}
+
+    {% else %}
+    <form action="{% url 'bookshelf:verlivrospesquisa' %}"
+          method="post">
+        {% csrf_token %}
+        Pesquisar:<br><input id="pesquisa" name="pesquisa" type="text"><br>
+        <input style="margin-top: 10px;" type="submit" value="pesquisa">
+    </form>
+    {% endif %}
 </header>
 
 {% endblock %}
