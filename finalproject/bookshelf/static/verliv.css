@@ -1,0 +1,84 @@
+
+body {
+  background-image: url("background.jpg");
+}
+.flex-row {
+  display:flex;
+  flex-flow:row;
+  align-items:center;
+}
+.flex-column{
+  display:flex;
+  flex-flow:column;
+}
+.center {
+  align-items:center;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+.list {
+  border-radius:3px;
+  overflow:hidden;
+}
+.list .card {
+  min-width:700px;
+  margin-bottom:10px;
+  perspective:600px;
+  transition:all 0.1s;
+  background-color:  #865642;
+  box-shadow:0px 2px 10px rgba(0,0,0,.2);
+  overflow:hidden;
+  height:200px;
+}
+.list .card .bottom {
+   margin-top:10px;
+    height:100%;
+  overflow:visible;
+}
+
+.list .card button.simple {
+  cursor:pointer;
+  color:#CCC;
+  border:none;
+  outline:none;
+  border-radius:4px;
+  background-color:#1ea94b;
+  padding:15px 20px;
+  font-family:'Montserrat';
+  font-weight:bold;
+  transition:all 0.1s;
+}
+.list .card button.simple:hover {
+  box-shadow:0px 15px 20px -5px rgba(0,0,0,.3);
+  transform:translate(0,-2px);
+}
+.list .card .info {
+  transition:all 0.2s;
+  min-width:200px;
+  padding:0px 30px;
+  font-family:'Montserrat';
+  font-weight:bold;
+}
+.list .card .info .title {
+  font-size:1em;
+  color:#FFF;
+  letter-spacing:1px;
+}
+.list .card .info .data {
+  font-size:12px;
+  font-weight:normal;
+  color:#888;
+}
+.list .card .group {
+  margin-left:auto;
+}
+.list .card .rate {
+  transition:all 0.1s;
+  padding:40px;
+  font-family:'Montserrat';
+  color:#CCC;
+  background-color: hsl(230, 10%, 13.95%);
+}
+

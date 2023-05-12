@@ -4,6 +4,8 @@
 
 {% block bodyPag %}
 <header>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'verliv.css'%}">
     <a href="{% url 'bookshelf:verlivrosToRead' %}">To Read</a><br>
     <a href="{% url 'bookshelf:verlivrosReading'  %}">Reading</a><br>
     <a href="{% url 'bookshelf:verlivrosReaded'  %}">Readed</a><br>
@@ -20,20 +22,30 @@
 </header>
 {% if livros %}
 {% load static %}
+<div class='center list flex-column'>
 <ul id="lista-livros">
     {% for book in livros %}
+
     <ul>
-        <br>Book: <a href="{% url 'bookshelf:detalhe' book.id %}">{{ book.name }}</a>
+        <div class='card flex-row '>
+            <img id="book-cover" src="{% static book.image %}" alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover" class='book'>
 
-        <br>Release Date: {{ book.pub_data.day }}/{{ book.pub_data.month }}/{{ book.pub_data.year }}
-        <br>Rating: {{ book.rating }}
-        <br><img id="book-cover" src="{% static book.image %}"
-             alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover"></div>
-        <br><br><br>
+            <div class='flex-column info'>
+            <div class='title'>{{ book.name }}</div>
+            <div class='data'>Release Date: {{ book.pub_data.day }}/{{ book.pub_data.month }}/{{ book.pub_data.year }}</div>
 
+            </div>
+            <div class='flex-column group'>
+                 <div class='rate'>Rating: {{ book.rating }}/5</div>
+                <div class='hidden bottom'><button class='simple'><a href="{% url 'bookshelf:detalhe' book.id %}">Detalhes</a></button></div>
+            </div>
+
+        </div>
     </ul>
+
     {% endfor %}
 </ul>
+</div>
 {% else %}
 <p>Bookshelf empty.</p>
 {% endif %}
@@ -44,6 +56,7 @@
     window.location.href = window.location.href.split('?')[0] + '?order_by=' + orderBy;
   });
 </script>
+
 {% endblock %}
 
 
