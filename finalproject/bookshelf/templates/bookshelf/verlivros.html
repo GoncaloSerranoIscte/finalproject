@@ -3,10 +3,18 @@
 {% block title %}Ver Livros{% endblock %}
 
 {% block bodyPag %}
+<div class="container">
 <header>
-    <a href="{% url 'bookshelf:verlivrosToRead' %}">To Read</a><br>
-    <a href="{% url 'bookshelf:verlivrosReading'  %}">Reading</a><br>
-    <a href="{% url 'bookshelf:verlivrosReaded'  %}">Readed</a><br>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'verliv.css'%}">
+    <div class="nav">
+    <div class="topnav">
+    <a href="{% url 'bookshelf:verlivrosToRead' %}">To Read</a>
+    <a href="{% url 'bookshelf:verlivrosReading'  %}">Reading</a>
+    <a href="{% url 'bookshelf:verlivrosReaded'  %}">Readed</a>
+    <a href="{% url 'bookshelf:verlivros'  %}">All</a><br>
+         </div>
+    {% if url != "verlivrospesquisa" %}
     <form method="get" id="book-form">
         <label for="order_by">Sort By:</label>
         <select name="order_by" id="order_by">
@@ -17,23 +25,41 @@
         </select>
         <button type="submit">Sort</button>
     </form>
+        </div>
+     {% endif %}
+   <!-- <form action="{% url 'bookshelf:verlivrospesquisa' %}"
+          method="post">
+        {% csrf_token %}
+        Pesquisar:<br><input id="pesquisa" name="pesquisa" type="text"><br>
+        <input style="margin-top: 10px;" type="submit" value="pesquisa">
+    </form>-->
 </header>
 {% if livros %}
 {% load static %}
+<div class='list flex-column'>
 <ul id="lista-livros">
     {% for book in livros %}
+
     <ul>
-        <br>Book: <a href="{% url 'bookshelf:detalhe' book.id %}">{{ book.name }}</a>
+        <div class='card flex-row '>
+            <img id="book-cover" src="{% static book.image %}" alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover" class='book_cover'>
 
-        <br>Release Date: {{ book.pub_data.day }}/{{ book.pub_data.month }}/{{ book.pub_data.year }}
-        <br>Rating: {{ book.rating }}
-        <br><img id="book-cover" src="{% static book.image %}"
-             alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover"></div>
-        <br><br><br>
+            <div class='flex-column info'>
+            <div class='title'>{{ book.name }}</div>
+            <div class='data'>Release Date: {{ book.pub_data.day }}/{{ book.pub_data.month }}/{{ book.pub_data.year }}</div>
 
+            </div>
+            <div class='flex-column group'>
+                 <div class='rate'>Rating: {{ book.rating }}/5</div>
+                <div class='hidden bottom'><button class='simple'><a href="{% url 'bookshelf:detalhe' book.id %}">Detalhes</a></button></div>
+            </div>
+
+        </div>
     </ul>
+
     {% endfor %}
 </ul>
+</div>
 {% else %}
 <p>Bookshelf empty.</p>
 {% endif %}
@@ -44,6 +70,8 @@
     window.location.href = window.location.href.split('?')[0] + '?order_by=' + orderBy;
   });
 </script>
+    </div>
+
 {% endblock %}
 
 

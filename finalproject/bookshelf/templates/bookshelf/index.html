@@ -11,14 +11,15 @@
     </title>
 </head>
 <body>
+
 {% block nav %}
-    <button id="openButton">Menu.</button>
-
-
-     {% if request.user.is_authenticated %}
-    <div class="popup" id="popup">
+<button id="openButton">Menu.</button>
+ <div class="popup" id="popup">
     <div class="vertical-navbar">
       <span class="close-button" id="closeButton">&times;</span>
+        <p style="font-family: 'Jost', sans-serif; font-size: 20px; color:white">What do you want to do?</p>
+     {% if request.user.is_authenticated %}
+
     {% if request.user.reader.image == "" %}
     {% if url != "adicionarlivro" %}
     <a href="{% url 'bookshelf:adicionarlivro' %}"> Add Book </a>
@@ -31,12 +32,11 @@
     {% endif %}
     <a href="{% url 'bookshelf:logoutview' %}"> Log out </a>
     <hr>
-            </div>
-  </div>
+
     {% else %}
     <br>
     {% if url != "loginview" %}
-    <a href="{% url 'bookshelf:loginview' %}" id="login">Login<br>Register</a>
+    <a href="{% url 'bookshelf:loginview' %}">Login<br>Register</a>
     <hr>
     {% endif %}
 
@@ -45,7 +45,8 @@
     <a href="{% url 'bookshelf:index' %}">Home Page </a>
     {% endif %}
     <hr>
-
+</div>
+  </div>
 
   <script>
     // Abrir janela popup ao clicar no botão
@@ -78,44 +79,29 @@
 </header>
 
 {% endblock %}
-<!--
-<nav>
-    {% if request.user.is_authenticated %}
-    {% if request.user.reader.image == "" %}
-    {% if url != "adicionarlivro" %}
-    <a href="{% url 'bookshelf:adicionarlivro' %}"> Add Book </a>
-    <hr>
-    {% endif %}
-    {% endif %}
-    {% if request.user.publisher.image == "" and url != "verlivros" %}
-    <a href="{% url 'bookshelf:verlivros' %}"> Ver Livros </a>
-    <hr>
-    {% endif %}
-    <a href="{% url 'bookshelf:logoutview' %}"> Log out </a>
-    <hr>
-    {% else %}
-    <br>
-    {% if url != "loginview" %}
-    <a href="{% url 'bookshelf:loginview' %}">Log in </a>
-    <hr>
-    {% endif %}
-
-    {% endif %}
-    {% if url != "index" %}
-    <a href="{% url 'bookshelf:index' %}">Home Page </a>
-    {% endif %}
-    <hr>
-</nav>-->
-
 {% block content %}
-    <div class="searchBar">
+{% if url != "index" %}
+    <div class="search">
   <h1>Bookshelf.</h1>
 <br>
-  <form method="GET" action="{% url 'bookshelf:index' %}">
-    <input type="text" name="q" placeholder="Search...">
-    <button type="submit">Search</button>
+  <form method="GET"  action="{% url 'bookshelf:verlivrospesquisa' %}" class="searchBar" >
+      {% csrf_token %}
+    <input type="text" name="pesquisa" placeholder="Search...">
+    <button type="submit" style="font-family: 'Jost', sans-serif; font-size: 15px">Search</button>
   </form>
         </div>
+{% else %}
+    <div class="searchIndex">
+  <h1>Bookshelf.</h1>
+<br>
+  <form method="GET"  action="{% url 'bookshelf:verlivrospesquisa' %}" class="searchBarIndex" >
+      {% csrf_token %}
+    <input type="text" name="pesquisa" placeholder="Search...">
+    <button type="submit" style="font-family: 'Jost', sans-serif; font-size: 20px">Search</button>
+  </form>
+        </div>
+    {% endif %}
 {% endblock %}
+
 </body>
 </html>

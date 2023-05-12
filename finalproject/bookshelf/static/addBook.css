@@ -1,0 +1,37 @@
+
+.main {
+    align-items: center;
+    position: absolute;
+    left: 30%;
+    width: 500px;
+    height: 475px;
+    background: #865642;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 5px 20px 50px #000;
+    padding: 10px;
+}
+
+input {
+    width: 50%;
+    height: 20px;
+    background: #ffffff;
+    justify-content: center;
+    display: flex;
+    margin: 10px auto;
+    padding: 5px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+label{
+	color: #fff;
+	font-size: 25px;
+	justify-content: center;
+	display: flex;
+	margin: 10px;
+	font-weight: bold;
+}
+
+

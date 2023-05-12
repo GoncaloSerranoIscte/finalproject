@@ -25,4 +25,6 @@ urlpatterns = [
 
     path("verlivrosReading", views.verlivrosReading, name='verlivrosReading'),
 
+    path("verlivrospesquisa", views.verlivrospesquisa, name='verlivrospesquisa'),
+
 ]
