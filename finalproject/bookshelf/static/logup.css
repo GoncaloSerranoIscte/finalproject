@@ -139,3 +139,16 @@ input[name="Log in"] {
 	transform: scale(.6);
 }
 
+a{
+display: flex;
+  align-items: center;
+  position: fixed;
+  left: 0%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 10px; /* Ajuste a margem esquerda conforme necessário */
+}
+
+a img {
+  margin-right: 10px; /* Adapte a margem conforme necessário */
+}
