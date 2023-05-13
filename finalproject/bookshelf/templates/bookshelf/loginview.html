@@ -1,8 +1,11 @@
 {% extends "bookshelf/index.html" %}
 {% block title %}Login
 {% endblock %}
-
 {% block bodyPag %}
+{% endblock %}
+{% block nav %}
+{% endblock %}
+{% block content %}
 <header>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'logup.css'%}">
@@ -23,7 +26,7 @@
                 <input type="password" id="password" name="password" placeholder="Password" required="">
             </div>
             <div class="SelectRole">
-                Profile Picture:<input type="file" name="myfile">
+                Profile Picture:<input type="file" name="myfile" id="myfile">
                 Choose a Role:
                 <select class="role" name="role" id="role">
                     <option value="Publisher">Publisher</option>
@@ -45,6 +48,5 @@
         </form>
     </div>
 </div>
-{% endblock %}
-{% block nav %}
+
 {% endblock %}

@@ -4,19 +4,25 @@
 
 {% block bodyPag %}
 <header>
-    <div>Add Book</div>
+     {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'addBook.css'%}">
+
 </header>
-<form action="{% url 'bookshelf:adicionarlivro'%}" enctype="multipart/form-data" method="post">
+<div class="main">
+<label>Add Book</label>
+    <form action="{% url 'bookshelf:adicionarlivro'%}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
-    Name:<br><input id="name" name="name" type="text"><br>
-    Authors: <br><input id="authors" name="authors" type="text"><br>
-    Description:<br><input id="description" name="description" type="text"><br>
-    Book Cover:<br><input type="file" name="myfile"><br>
+    Name:<input id="name" name="name" type="text">
+    Authors: <input id="authors" name="authors" type="text">
+    Description:<input id="description" name="description" type="text">
+    Book Cover:<input type="file" name="myfile">
     <label for="pud_data">Release Date:</label>
     <input type="datetime-local" id="pud_data" name="pud_data" >
 
-    <input style="margin-top: 10px;" type="submit" value="Register">
+    <input style="font-size: 10px; width: 30%;" type="submit" value="Register">
 </form>
 
-
+</div>
+{% endblock %}
+{% block content %}
 {% endblock %}

@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'index.css'%}">
+     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
     <title>
         {% block title %} BookShelf Home
         {% endblock %}
@@ -9,28 +12,14 @@
 </head>
 <body>
 
-{% block bodyPag %}
-<header>
-    {% load static %}
-    {% if request.user.is_authenticated %}
-    <div id="nome">Bem vindo, {{ request.user.username }}!</div>
-    {% if request.user.reader.image == "" %}
-    <img id="user-Pfoto" src="{% static request.user.publisher.image %}"
-         alt="Imagem não encontrada" class="rounded-image-mini" title="Foto de Perfil"></div>
-    {% endif %}
-    {% if request.user.publisher.image == "" %}
-    <img id="user-Rfoto" src="{% static request.user.reader.image %}"
-         alt="Imagem não encontrada" class="rounded-image-mini" title="Foto de Perfil"></div>
-    {% endif %}
-    {% else %}
-    <div id="no_name">Bem vindo!</div>
-    {% endif %}
-</header>
-
-{% endblock %}
 {% block nav %}
-<nav>
-    {% if request.user.is_authenticated %}
+<button id="openButton">Menu.</button>
+ <div class="popup" id="popup">
+    <div class="vertical-navbar">
+      <span class="close-button" id="closeButton">&times;</span>
+        <p style="font-family: 'Jost', sans-serif; font-size: 20px; color:white">What do you want to do?</p>
+     {% if request.user.is_authenticated %}
+
     {% if request.user.reader.image == "" %}
     {% if url != "adicionarlivro" %}
     <a href="{% url 'bookshelf:adicionarlivro' %}"> Add Book </a>
@@ -43,10 +32,11 @@
     {% endif %}
     <a href="{% url 'bookshelf:logoutview' %}"> Log out </a>
     <hr>
+
     {% else %}
     <br>
     {% if url != "loginview" %}
-    <a href="{% url 'bookshelf:loginview' %}">Log in </a>
+    <a href="{% url 'bookshelf:loginview' %}">Login<br>Register</a>
     <hr>
     {% endif %}
 
@@ -55,7 +45,63 @@
     <a href="{% url 'bookshelf:index' %}">Home Page </a>
     {% endif %}
     <hr>
-</nav>
+</div>
+  </div>
+
+  <script>
+    // Abrir janela popup ao clicar no botão
+    document.getElementById("openButton").addEventListener("click", function() {
+      document.getElementById("popup").style.display = "flex";
+    });
+
+    // Fechar janela popup ao clicar no botão "X"
+    document.getElementById("closeButton").addEventListener("click", function() {
+      document.getElementById("popup").style.display = "none";
+    });
+  </script>
 {% endblock %}
+{% block bodyPag %}
+<header>
+    {% load static %}
+    {% if request.user.is_authenticated %}
+    <div id="nome" style="color:white; font-size:10px">Bem vindo, {{ request.user.username }}!</div>
+    {% if request.user.reader.image == "" %}
+    <img id="user-Pfoto" src="{% static request.user.publisher.image %}"
+         alt="Imagem não encontrada" class="rounded-image-mini" title="Foto de Perfil"></div>
+    {% endif %}
+    {% if request.user.publisher.image == "" %}
+    <img id="user-Rfoto" src="{% static request.user.reader.image %}"
+         alt="Imagem não encontrada" class="rounded-image-mini" title="Foto de Perfil"></div>
+    {% endif %}
+    {% else %}
+    <div id="no_name" style="color:white; font-size:15px; padding-left: 10px;">Bem vindo!</div>
+    {% endif %}
+</header>
+
+{% endblock %}
+{% block content %}
+{% if url != "index" %}
+    <div class="search">
+  <h1>Bookshelf.</h1>
+<br>
+  <form method="GET"  action="{% url 'bookshelf:verlivrospesquisa' %}" class="searchBar" >
+      {% csrf_token %}
+    <input type="text" name="pesquisa" placeholder="Search...">
+    <button type="submit" style="font-family: 'Jost', sans-serif; font-size: 15px">Search</button>
+  </form>
+        </div>
+{% else %}
+    <div class="searchIndex">
+  <h1>Bookshelf.</h1>
+<br>
+  <form method="GET"  action="{% url 'bookshelf:verlivrospesquisa' %}" class="searchBarIndex" >
+      {% csrf_token %}
+    <input type="text" name="pesquisa" placeholder="Search...">
+    <button type="submit" style="font-family: 'Jost', sans-serif; font-size: 20px">Search</button>
+  </form>
+        </div>
+    {% endif %}
+{% endblock %}
+
 </body>
 </html>

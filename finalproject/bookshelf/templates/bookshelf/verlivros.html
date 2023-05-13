@@ -3,12 +3,18 @@
 {% block title %}Ver Livros{% endblock %}
 
 {% block bodyPag %}
+<div class="container">
 <header>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'verliv.css'%}">
-    <a href="{% url 'bookshelf:verlivrosToRead' %}">To Read</a><br>
-    <a href="{% url 'bookshelf:verlivrosReading'  %}">Reading</a><br>
-    <a href="{% url 'bookshelf:verlivrosReaded'  %}">Readed</a><br>
+    <div class="nav">
+    <div class="topnav">
+    <a href="{% url 'bookshelf:verlivrosToRead' %}">To Read</a>
+    <a href="{% url 'bookshelf:verlivrosReading'  %}">Reading</a>
+    <a href="{% url 'bookshelf:verlivrosReaded'  %}">Readed</a>
+    <a href="{% url 'bookshelf:verlivros'  %}">All</a><br>
+         </div>
+    {% if url != "verlivrospesquisa" %}
     <form method="get" id="book-form">
         <label for="order_by">Sort By:</label>
         <select name="order_by" id="order_by">
@@ -19,16 +25,24 @@
         </select>
         <button type="submit">Sort</button>
     </form>
+        </div>
+     {% endif %}
+   <!-- <form action="{% url 'bookshelf:verlivrospesquisa' %}"
+          method="post">
+        {% csrf_token %}
+        Pesquisar:<br><input id="pesquisa" name="pesquisa" type="text"><br>
+        <input style="margin-top: 10px;" type="submit" value="pesquisa">
+    </form>-->
 </header>
 {% if livros %}
 {% load static %}
-<div class='center list flex-column'>
+<div class='list flex-column'>
 <ul id="lista-livros">
     {% for book in livros %}
 
     <ul>
         <div class='card flex-row '>
-            <img id="book-cover" src="{% static book.image %}" alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover" class='book'>
+            <img id="book-cover" src="{% static book.image %}" alt="Imagem não encontrada" class="rounded-image-mini" title="Book Cover" class='book_cover'>
 
             <div class='flex-column info'>
             <div class='title'>{{ book.name }}</div>
@@ -56,6 +70,7 @@
     window.location.href = window.location.href.split('?')[0] + '?order_by=' + orderBy;
   });
 </script>
+    </div>
 
 {% endblock %}
 
