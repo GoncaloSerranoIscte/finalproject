@@ -1,5 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
+
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -13,17 +15,6 @@ from django.db.models import Q
 
 def index(request):
     url = "index"
-    from django.db.models import Q
-
-    def index(request):
-        url = "index"
-        query = request.GET.get('q')
-
-        if query:
-            books = Book.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
-            context = {'url': url, 'books': books}
-            return render(request, 'bookshelf/search.html', context)
-
     context = {'url': url}
     return render(request, 'bookshelf/index.html', context)
 
@@ -153,7 +144,7 @@ def detalhe(request, book_id):
             a = c
             exists = 1
     connections = Connect.objects.filter(
-       book=book
+        book=book
     )
     return render(request, 'bookshelf/detalhe.html', {'book': book, 'connect': a, 'connections': connections})
 
@@ -223,7 +214,7 @@ def adicionarlista(request, book_id):
     connections = Connect.objects.filter(
         book=book
     )
-    return render(request, 'bookshelf/detalhe.html', {'book': book, 'connect': c1, 'connections':connections})
+    return render(request, 'bookshelf/detalhe.html', {'book': book, 'connect': c1, 'connections': connections})
 
 
 def verlivrosToRead(request):
@@ -231,7 +222,7 @@ def verlivrosToRead(request):
         connect__reader=request.user.reader,
         connect__shelf='to read'
     ).distinct()
-    url = "verlivrosToRead"
+    url = "verlivros"
 
     order_by = request.GET.get('order_by', '-pub_data')
     if livros.exists():
@@ -256,14 +247,15 @@ def verlivrosToRead(request):
         livros = livros.order_by('-rating')
 
     context = {'url': url, 'livros': livros, 'order_by': order_by}
-    return render(request, 'bookshelf/verlivrosToRead.html', context)
+    return render(request, 'bookshelf/verlivros.html', context)
+
 
 def verlivrosReading(request):
     livros = Book.objects.filter(
         connect__reader=request.user.reader,
         connect__shelf='reading'
     ).distinct()
-    url = "verlivrosReading"
+    url = "verlivros"
 
     order_by = request.GET.get('order_by', '-pub_data')
     if livros.exists():
@@ -288,14 +280,15 @@ def verlivrosReading(request):
         livros = livros.order_by('-rating')
 
     context = {'url': url, 'livros': livros, 'order_by': order_by}
-    return render(request, 'bookshelf/verlivrosReading.html', context)
+    return render(request, 'bookshelf/verlivros.html', context)
+
 
 def verlivrosReaded(request):
     livros = Book.objects.filter(
         connect__reader=request.user.reader,
         connect__shelf='readed'
     ).distinct()
-    url = "verlivrosReaded"
+    url = "verlivros"
 
     order_by = request.GET.get('order_by', '-pub_data')
     if livros.exists():
@@ -320,4 +313,26 @@ def verlivrosReaded(request):
         livros = livros.order_by('-rating')
 
     context = {'url': url, 'livros': livros, 'order_by': order_by}
-    return render(request, 'bookshelf/verlivrosReaded.html', context)
+    return render(request, 'bookshelf/verlivros.html', context)
+
+
+@login_required(login_url='/bookshelf/loginview')
+def verlivrospesquisa(request):
+    if 'pesquisa' in request.POST:
+        pesquisa = request.POST['pesquisa']
+        livros = Book.objects.filter(
+            Q(name__icontains=pesquisa) |
+            Q(description__icontains=pesquisa) |
+            Q(autor__icontains=pesquisa) |
+            Q(publisher__user__username__icontains=pesquisa)
+        ).distinct()
+        url = "verlivrospesquisa"
+
+        order_by = request.GET.get('order_by', '-pub_data')
+        if livros.exists():
+            for l in livros:
+                l.updateRating()
+
+
+        context = {'url': url, 'livros': livros, 'order_by': order_by}
+        return render(request, 'bookshelf/verlivros.html', context)

@@ -1,16 +1,17 @@
 
-body {
-  background-image: url("background.jpg");
-}
 .flex-row {
+  float: left;
   display:flex;
   flex-flow:row;
   align-items:center;
+    border-radius:20px;
 }
+
 .flex-column{
   display:flex;
   flex-flow:column;
 }
+/*tirei o center de <div class='list flex-column'> não sei se faz diferença*/
 .center {
   align-items:center;
   position:absolute;
@@ -19,11 +20,12 @@ body {
   transform:translate(-50%,-50%);
 }
 .list {
-  border-radius:3px;
+  border-radius:20px;
   overflow:hidden;
+    align-items:center;
 }
 .list .card {
-  min-width:700px;
+  width:600px;
   margin-bottom:10px;
   perspective:600px;
   transition:all 0.1s;
@@ -33,20 +35,19 @@ body {
   height:200px;
 }
 .list .card .bottom {
-   margin-top:10px;
-    height:100%;
+  margin-top: 10px;
   overflow:visible;
 }
 
 .list .card button.simple {
   cursor:pointer;
-  color:#CCC;
+  color:#865642;
   border:none;
   outline:none;
   border-radius:4px;
-  background-color:#1ea94b;
-  padding:15px 20px;
-  font-family:'Montserrat';
+  background-color: #ffffff;
+  padding: 15px 20px;
+ font-family: 'Jost', sans-serif;
   font-weight:bold;
   transition:all 0.1s;
 }
@@ -58,27 +59,72 @@ body {
   transition:all 0.2s;
   min-width:200px;
   padding:0px 30px;
-  font-family:'Montserrat';
+  font-family: 'Jost', sans-serif;
   font-weight:bold;
 }
 .list .card .info .title {
-  font-size:1em;
+  font-size:20px;
   color:#FFF;
   letter-spacing:1px;
 }
 .list .card .info .data {
-  font-size:12px;
+  font-size:20px;
   font-weight:normal;
   color:#888;
 }
 .list .card .group {
   margin-left:auto;
+  padding: 20px;
 }
 .list .card .rate {
   transition:all 0.1s;
-  padding:40px;
-  font-family:'Montserrat';
+  padding:20px;
+  font-family: 'Jost', sans-serif;
   color:#CCC;
   background-color: hsl(230, 10%, 13.95%);
+    border-radius:4px;
+
 }
 
+img{
+  width: 120px;
+  height: 150px;
+  padding: 10px;
+}
+
+.nav{
+  float: left;
+  width: 30%;
+
+}
+
+.topnav {
+   display:flex;
+  flex-flow:column;
+  width: 50%;
+   text-align: center;
+  position: relative;
+
+}
+
+.topnav a {
+   background: rgba(0, 0, 0, 0.5);
+  color: #f2f2f2;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #aa0404;
+  color: white;
+}
+
+.container {
+  overflow: auto;
+}
